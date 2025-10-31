@@ -2,14 +2,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
-using static UnityEngine.Rendering.DebugUI.MessageBox;
 
 [System.Serializable]
 public class AppInfo
 {
     public string packageName;
     public string appName;
+    public Sprite appIcon;
 }
 
 public class HomeManager : MonoBehaviour
@@ -138,10 +137,14 @@ public class HomeManager : MonoBehaviour
             AndroidJavaObject appNameObj = applicationInfo.Call<AndroidJavaObject>("loadLabel", packageManager);
             string appName = appNameObj.Call<string>("toString");
             
+            // Get app icon
+            Sprite appIconSprite = GetAppIconSprite(applicationInfo, packageManager);
+            
             AppInfo app = new AppInfo
             {
                 packageName = packageName,
-                appName = appName
+                appName = appName,
+                appIcon = appIconSprite
             };
             
             appList.Add(app);
@@ -160,6 +163,71 @@ public class HomeManager : MonoBehaviour
         appList.Add(new AppInfo { packageName = "com.example.app2", appName = "Test App 2" });
 #endif
         return appList;
+    }
+
+    private Sprite GetAppIconSprite(AndroidJavaObject applicationInfo, AndroidJavaObject packageManager)
+    {
+        try
+        {
+            // Get the app icon drawable
+            AndroidJavaObject iconDrawable = applicationInfo.Call<AndroidJavaObject>("loadIcon", packageManager);
+
+            // Convert drawable to bitmap
+            AndroidJavaObject bitmap = DrawableToBitmap(iconDrawable);
+
+            // Convert bitmap to Texture2D
+            Texture2D texture = BitmapToTexture2D(bitmap);
+
+            // Convert Texture2D to Sprite
+            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+
+            return sprite;
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Error getting app icon: {e.Message}");
+            return null;
+        }
+    }
+
+    private AndroidJavaObject DrawableToBitmap(AndroidJavaObject drawable)
+    {
+        // Get drawable bounds
+        int width = drawable.Call<int>("getIntrinsicWidth");
+        int height = drawable.Call<int>("getIntrinsicHeight");
+
+        // Create bitmap
+        AndroidJavaObject bitmapConfig = new AndroidJavaClass("android.graphics.Bitmap$Config").GetStatic<AndroidJavaObject>("ARGB_8888");
+        AndroidJavaObject bitmap = new AndroidJavaClass("android.graphics.Bitmap").CallStatic<AndroidJavaObject>("createBitmap", width, height, bitmapConfig);
+
+        // Draw drawable to canvas
+        AndroidJavaObject canvas = new AndroidJavaObject("android.graphics.Canvas", bitmap);
+        drawable.Call("setBounds", 0, 0, width, height);
+        drawable.Call("draw", canvas);
+
+        return bitmap;
+    }
+
+    private Texture2D BitmapToTexture2D(AndroidJavaObject bitmap)
+    {
+        int width = bitmap.Call<int>("getWidth");
+        int height = bitmap.Call<int>("getHeight");
+
+        // Create byte array output stream
+        AndroidJavaObject stream = new AndroidJavaObject("java.io.ByteArrayOutputStream");
+
+        // Compress bitmap to PNG format
+        AndroidJavaObject compressFormat = new AndroidJavaClass("android.graphics.Bitmap$CompressFormat").GetStatic<AndroidJavaObject>("PNG");
+        bitmap.Call<bool>("compress", compressFormat, 100, stream);
+
+        // Get byte array
+        byte[] imageBytes = stream.Call<byte[]>("toByteArray");
+
+        // Create Texture2D from bytes
+        Texture2D texture = new Texture2D(width, height, TextureFormat.RGBA32, false);
+        texture.LoadImage(imageBytes);
+
+        return texture;
     }
 
     /// <summary>
@@ -182,16 +250,17 @@ public class HomeManager : MonoBehaviour
         foreach (AppInfo app in apps)
         {
             GameObject buttonObj = Instantiate(homeButtonPrefab, homePanel.transform);
+            HomeButton homeButton = buttonObj.GetComponent<HomeButton>();
 
             // Find TMP component in children
-            TextMeshProUGUI tmpText = buttonObj.GetComponentInChildren<TextMeshProUGUI>();
-            if (tmpText != null)
+            if (homeButton != null)
             {
-                tmpText.text = app.appName;
+                if (app.appName != "") homeButton.SetName(app.appName);
+                if (app.appIcon != null) homeButton.SetIcon(app.appIcon);
             }
             else
             {
-                Debug.LogWarning($"No TextMeshProUGUI found in children of {buttonObj.name}");
+                Debug.LogWarning($"No HomeButton found in of {buttonObj.name}");
             }
 
             // Add onClick listener
