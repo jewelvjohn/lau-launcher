@@ -6,8 +6,8 @@ using System.Collections.Generic;
 [System.Serializable]
 public class AppInfo
 {
-    public string packageName;
     public string appName;
+    public string packageName;
     public Sprite appIcon;
 }
 
@@ -21,6 +21,9 @@ public class HomeManager : MonoBehaviour
     [SerializeField] private bool sortAlphabetically = true;
     [SerializeField] private bool includeSystemApps = false;
     
+    [Header("Sample Data")]
+    [SerializeField] private List<AppInfo> sampleApps;
+
     [Header("Frame Rate Debug")]
     [SerializeField] private bool showFPS = false;
     [SerializeField] private float updateInterval = 0.5f;
@@ -158,9 +161,20 @@ public class HomeManager : MonoBehaviour
     }
 #else
         Debug.LogWarning("This function only works on Android devices");
+        
         // Test data for Unity Editor
-        appList.Add(new AppInfo { packageName = "com.example.app1", appName = "Test App 1" });
-        appList.Add(new AppInfo { packageName = "com.example.app2", appName = "Test App 2" });
+        if (sampleApps != null && sampleApps.Count > 0)
+        {
+            appList.AddRange(sampleApps);
+        }
+        else
+        {
+            Debug.LogWarning("No sample apps assigned for testing in Unity Editor");
+            // Add some dummy apps for testing
+
+            appList.Add(new AppInfo { packageName = "com.example.app1", appName = "Test App 1" });
+            appList.Add(new AppInfo { packageName = "com.example.app2", appName = "Test App 2" });
+        }
 #endif
         return appList;
     }

@@ -1,4 +1,8 @@
 .container {
+    background-image: url("project://database/Assets/Levels/UI/Pictures/background%20(blur).jpg?fileID=2800000&guid=46cbf67964aa7a54488e591e10118ab4&type=3#background (blur)");
+    -unity-background-scale-mode: scale-and-crop;
+    background-color: rgba(0, 0, 0, 0);
+    -unity-background-image-tint-color: rgb(191, 191, 191);
 }
 
 .app-scroll {
@@ -58,8 +62,11 @@
     -unity-text-align: middle-left;
     color: rgb(255, 255, 255);
     font-size: 70px;
-    -unity-font-definition: url("project://database/Assets/Levels/UI/Fonts/PlayfairDisplay.ttf?fileID=12800000&guid=6af77deb46694ef4082f19b6cb15d848&type=3#PlayfairDisplay");
+    -unity-font-definition: url("project://database/Assets/Levels/UI/Fonts/Inter.ttf?fileID=12800000&guid=98725e41f882e0e409ddbc9ee9037905&type=3#Inter");
     flex-shrink: initial;
+    white-space: nowrap;
+    -unity-font-style: normal;
+    letter-spacing: -4px;
 }
 
 .app-icon {
