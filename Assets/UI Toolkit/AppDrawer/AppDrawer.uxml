@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/AppDrawer/AppDrawer.uss?fileID=7433441132597879392&amp;guid=abe2601b0df5877429bce7aeefeb8b19&amp;type=3#AppDrawer" />
+    <ui:VisualElement name="Container" class="container" style="flex-grow: 1; padding-top: 24px; padding-right: 24px; padding-bottom: 24px; padding-left: 24px;">
+        <ui:ScrollView name="AppScroll" class="app-scroll">
+            <ui:Button class="app-button">
+                <ui:VisualElement name="Icon" class="app-icon" />
+                <ui:Label text="Messages" />
+            </ui:Button>
+        </ui:ScrollView>
+    </ui:VisualElement>
+</ui:UXML>
