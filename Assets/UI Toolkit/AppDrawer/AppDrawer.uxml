@@ -3,8 +3,8 @@
     <ui:VisualElement name="Container" class="container" style="flex-grow: 1; padding-top: 24px; padding-right: 24px; padding-bottom: 24px; padding-left: 24px;">
         <ui:ScrollView name="AppScroll" class="app-scroll">
             <ui:Button class="app-button">
-                <ui:VisualElement name="Icon" class="app-icon" />
-                <ui:Label text="Messages" />
+                <ui:VisualElement name="AppIcon" class="app-icon" style="background-image: url(&quot;project://database/Assets/Levels/UI/Sprites/message.png?fileID=2800000&amp;guid=5a05c0b9f7135814cb1d44e97f6b2bd4&amp;type=3#message&quot;);" />
+                <ui:Label text="Messages are being delivered" name="AppName" class="app-name" />
             </ui:Button>
         </ui:ScrollView>
     </ui:VisualElement>
