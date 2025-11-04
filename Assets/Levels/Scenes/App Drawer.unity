@@ -963,6 +963,7 @@ MonoBehaviour:
   homeButtonPrefab: {fileID: 7408360601075029975, guid: 934de301181712345bc45855d93eef45, type: 3}
   sortAlphabetically: 1
   includeSystemApps: 1
+  sampleApps: []
   showFPS: 1
   updateInterval: 0.5
   frameRateCounter: {fileID: 980407985}

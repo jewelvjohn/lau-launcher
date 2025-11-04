@@ -20,6 +20,7 @@ public class HomeManager : MonoBehaviour
     [Header("Properties")]
     [SerializeField] private bool sortAlphabetically = true;
     [SerializeField] private bool includeSystemApps = false;
+    [SerializeField] private bool includeRedundentPackages = false;
     
     [Header("Sample Data")]
     [SerializeField] private List<AppInfo> sampleApps;
@@ -122,6 +123,16 @@ public class HomeManager : MonoBehaviour
             AndroidJavaObject applicationInfo = activityInfo.Get<AndroidJavaObject>("applicationInfo");
             
             string packageName = activityInfo.Get<string>("packageName");
+            
+            if (!includeRedundentPackages)
+            {
+                // Check for duplicate package names
+                bool alreadyExists = appList.Exists(app => app.packageName == packageName);
+                if (alreadyExists)
+                {
+                    continue;
+                }
+            }
             
             // Filter system apps if needed
             if (!includeSystemApps)
@@ -247,7 +258,7 @@ public class HomeManager : MonoBehaviour
     /// <summary>
     /// Creates button instances for each app
     /// </summary>
-    void CreateAppButtons(List<AppInfo> apps)
+    private void CreateAppButtons(List<AppInfo> apps)
     {
         if (homeButtonPrefab == null)
         {
@@ -259,6 +270,11 @@ public class HomeManager : MonoBehaviour
         {
             Debug.LogError("parentContainer is not assigned!");
             return;
+        }
+
+        if (sortAlphabetically)
+        {
+            apps.Sort((a, b) => a.appName.CompareTo(b.appName));
         }
 
         foreach (AppInfo app in apps)
