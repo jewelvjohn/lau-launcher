@@ -1,6 +1,5 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
 using System.Collections.Generic;
 
 [System.Serializable]
@@ -14,12 +13,13 @@ public class AppInfo
 public class HomeManager : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private GameObject homePanel;
-    [SerializeField] private GameObject homeButtonPrefab;
+    [SerializeField] private UIDocument document;
+    [SerializeField] private VisualTreeAsset appButtonTemplate;
     
     [Header("Properties")]
     [SerializeField] private bool sortAlphabetically = true;
     [SerializeField] private bool includeSystemApps = false;
+    [SerializeField] private bool includeRedundentPackages = false;
     
     [Header("Sample Data")]
     [SerializeField] private List<AppInfo> sampleApps;
@@ -27,18 +27,21 @@ public class HomeManager : MonoBehaviour
     [Header("Frame Rate Debug")]
     [SerializeField] private bool showFPS = false;
     [SerializeField] private float updateInterval = 0.5f;
-    [SerializeField] private TMP_Text frameRateCounter;
 
     private float accum = 0f;
     private int frames = 0;
     private float timeLeft;
     private float fps;
 
+    // UXML Elements
+    private VisualElement rootElement;
+    private ScrollView appScrollView;
+
     #region Debug
     private void FrameRateCalculate()
     {
-        if (!showFPS || frameRateCounter == null) return;
-        
+        if (!showFPS) return;
+
         timeLeft -= Time.deltaTime;
         accum += Time.timeScale / Time.deltaTime;
         frames++;
@@ -51,18 +54,17 @@ public class HomeManager : MonoBehaviour
             accum = 0f;
             frames = 0;
 
-            // Update UI
-            if (fps >= 60f)
-                frameRateCounter.color = Color.green;
-            else if (fps >= 30f)
-                frameRateCounter.color = Color.yellow;
-            else
-                frameRateCounter.color = Color.red;
-
-            frameRateCounter.text = $"{fps:F0}";
+            // Update UI or log FPS
+            Debug.Log($"FPS: {fps:F2}");
         }
     }
     #endregion
+
+    private void OnEnable()
+    {
+        rootElement = document.rootVisualElement;
+        appScrollView = rootElement.Q<ScrollView>("AppScroll");
+    }
 
     private void Start()
     {
@@ -79,19 +81,10 @@ public class HomeManager : MonoBehaviour
 
     private void Initialize()
     {
-        RefreshButtons();
         // Additional initialization logic can be added here
 
         List<AppInfo> installedApps = GetInstalledApps(includeSystemApps);
         CreateAppButtons(installedApps);
-    }
-
-    private void RefreshButtons()
-    {
-        for (int i = 0; i < homePanel.transform.childCount; i++)
-        {
-            Destroy(homePanel.transform.GetChild(i).gameObject);
-        }
     }
 
     public List<AppInfo> GetInstalledApps(bool includeSystemApps = false)
@@ -122,6 +115,16 @@ public class HomeManager : MonoBehaviour
             AndroidJavaObject applicationInfo = activityInfo.Get<AndroidJavaObject>("applicationInfo");
             
             string packageName = activityInfo.Get<string>("packageName");
+
+            if (!includeRedundentPackages)
+            {
+                // Check for duplicate package names
+                bool alreadyExists = appList.Exists(app => app.packageName == packageName);
+                if (alreadyExists)
+                {
+                    continue;
+                }
+            }
             
             // Filter system apps if needed
             if (!includeSystemApps)
@@ -247,47 +250,56 @@ public class HomeManager : MonoBehaviour
     /// <summary>
     /// Creates button instances for each app
     /// </summary>
-    void CreateAppButtons(List<AppInfo> apps)
+    private void CreateAppButtons(List<AppInfo> apps)
     {
-        if (homeButtonPrefab == null)
+        if (apps.Count == 0)
         {
-            Debug.LogError("homeButtonPrefab is not assigned!");
+            Debug.LogWarning("No apps to create buttons for.");
             return;
         }
 
-        if (homePanel == null)
+        if (sortAlphabetically)
         {
-            Debug.LogError("parentContainer is not assigned!");
-            return;
+            apps.Sort((a, b) => a.appName.CompareTo(b.appName));
         }
 
+        appScrollView.Clear();
         foreach (AppInfo app in apps)
         {
-            GameObject buttonObj = Instantiate(homeButtonPrefab, homePanel.transform);
-            HomeButton homeButton = buttonObj.GetComponent<HomeButton>();
-
-            // Find TMP component in children
-            if (homeButton != null)
+            // Instantiate buttons for apps
+            VisualElement appButton = appButtonTemplate.Instantiate();
+            if (appButton == null)
             {
-                if (app.appName != "") homeButton.SetName(app.appName);
-                if (app.appIcon != null) homeButton.SetIcon(app.appIcon);
-            }
-            else
-            {
-                Debug.LogWarning($"No HomeButton found in of {buttonObj.name}");
+                Debug.LogError("App button template instantiation failed.");
+                continue;
             }
 
-            // Add onClick listener
-            Button button = buttonObj.GetComponent<Button>();
-            if (button != null)
+            Label appLabel = appButton.Q<Label>("AppNameTemplate");
+            VisualElement appIconElement = appButton.Q<VisualElement>("AppIconTemplate");
+
+            if (appLabel == null || appIconElement == null)
             {
-                string packageToOpen = app.packageName; // Capture in local variable for closure
-                button.onClick.AddListener(() => LaunchApp(packageToOpen));
+                Debug.LogError($"App button template is missing required elements. {appLabel}, {appIconElement}");
+                continue;
             }
+
+            if (app.appName != "")
+                appLabel.text = app.appName;
             else
+                continue;
+
+            if (app.appIcon != null)
+                appIconElement.style.backgroundImage = new StyleBackground(app.appIcon);
+
+            Button buttonComponent = appButton.Q<Button>("AppButtonTemplate");
+            if (buttonComponent == null)
             {
-                Debug.LogWarning($"No Button component found on {buttonObj.name}");
+                Debug.LogError("App button template is missing Button component.");
+                continue;
             }
+            buttonComponent.clicked += () => LaunchApp(app.packageName);
+            
+            appScrollView.Add(appButton);
         }
     }
 

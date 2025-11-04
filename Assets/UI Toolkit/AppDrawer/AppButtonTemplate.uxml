@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/AppDrawer/AppDrawer.uss?fileID=7433441132597879392&amp;guid=abe2601b0df5877429bce7aeefeb8b19&amp;type=3#AppDrawer" />
+    <ui:Button name="AppButtonTemplate" class="app-button">
+        <ui:VisualElement name="AppIconTemplate" class="app-icon" style="background-image: url(&quot;project://database/Assets/Levels/UI/Sprites/message.png?fileID=2800000&amp;guid=5a05c0b9f7135814cb1d44e97f6b2bd4&amp;type=3#message&quot;);" />
+        <ui:Label text="Messages are being delivered" name="AppNameTemplate" class="app-name" />
+    </ui:Button>
+</ui:UXML>
