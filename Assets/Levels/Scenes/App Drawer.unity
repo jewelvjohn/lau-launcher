@@ -965,15 +965,111 @@ MonoBehaviour:
   includeSystemApps: 1
   includeRedundentPackages: 0
   sampleApps:
-  - appName: Adobe Acrobat
-    packageName: com.adobe.acrobat
+  - appName: Adobe Acrobat Reader
+    packageName: com.adobe.reader
     appIcon: {fileID: 21300000, guid: 0cd4390d52ada14419e9b10e9c4786cd, type: 3}
+  - appName: Adobe Creative Cloud
+    packageName: com.adobe.creativecloud
+    appIcon: {fileID: 21300000, guid: bfbbf69cfe2da02478eba4e68d81f058, type: 3}
   - appName: AI
     packageName: com.google.ai
     appIcon: {fileID: 21300000, guid: 1319ae5cdacd96d45bfbd71ea03089dd, type: 3}
-  - appName: Adobe Creative Cloud
-    packageName: com.adobe.creativecloud
-    appIcon: {fileID: 21300000, guid: 146420ddd1b4ece42ba16cd1be1a1389, type: 3}
+  - appName: App Store
+    packageName: com.apple.appstore
+    appIcon: {fileID: 21300000, guid: 414efcf69c4a0ee43a0d7c38a187ba60, type: 3}
+  - appName: "Assassin\u2019s Creed"
+    packageName: com.ubisoft.assassinscreed
+    appIcon: {fileID: 21300000, guid: 51c1b28a11319014eaf5a060c02fbc8f, type: 3}
+  - appName: Brave Browser
+    packageName: com.brave.browser
+    appIcon: {fileID: 21300000, guid: faa0b7541752e654cb8d2da4ddb0cc38, type: 3}
+  - appName: Canva
+    packageName: com.canva.editor
+    appIcon: {fileID: 21300000, guid: 81d1ed916f0bdcf4682f39a56730e15f, type: 3}
+  - appName: ChatGPT
+    packageName: com.openai.chatgpt
+    appIcon: {fileID: 21300000, guid: be6dd80e10e0ff04b910446b5cb57cad, type: 3}
+  - appName: Google Chrome
+    packageName: com.google.chrome
+    appIcon: {fileID: 21300000, guid: 00e1dabb1c01347469f7634336afd1f3, type: 3}
+  - appName: Claude AI
+    packageName: com.anthropic.claude
+    appIcon: {fileID: 21300000, guid: 947844628362262448f7e2679135d10a, type: 3}
+  - appName: Discord
+    packageName: com.discord
+    appIcon: {fileID: 21300000, guid: dce1e16d4f16f0d49a62322d3f70f608, type: 3}
+  - appName: Duolingo
+    packageName: com.duolingo
+    appIcon: {fileID: 21300000, guid: ee51bdd29a1922747a4fbbfddc26e6a8, type: 3}
+  - appName: Evernote
+    packageName: com.evernote
+    appIcon: {fileID: 21300000, guid: 7c00a7c50d6c721418ed3a7fda2c8f12, type: 3}
+  - appName: Free Fire
+    packageName: com.garena.freefire
+    appIcon: {fileID: 21300000, guid: 6b3be133d42172748bd06c0dfccfb595, type: 3}
+  - appName: GitHub Copilot
+    packageName: com.github.copilot
+    appIcon: {fileID: 21300000, guid: cdc745962f39e344fb56926ea3d3f6f7, type: 3}
+  - appName: Gmail
+    packageName: com.google.mail
+    appIcon: {fileID: 21300000, guid: b6fa7bc8c87333a45835d0442e5fbf8a, type: 3}
+  - appName: Google Chat
+    packageName: com.google.chat
+    appIcon: {fileID: 21300000, guid: 7dd92ca11c939aa458d4ea4ab26886d7, type: 3}
+  - appName: Google Drive
+    packageName: com.google.drive
+    appIcon: {fileID: 21300000, guid: 7c693d2955fa43f4eb698ffd811abf7a, type: 3}
+  - appName: Google Files
+    packageName: com.google.files
+    appIcon: {fileID: 21300000, guid: 7620ebd11a125fa49a6a51f31d48d6ba, type: 3}
+  - appName: Google Play Store
+    packageName: com.android.vending
+    appIcon: {fileID: 21300000, guid: d6c2f50b91a3aec44bac5156acbee738, type: 3}
+  - appName: Google Slides
+    packageName: com.google.slides
+    appIcon: {fileID: 21300000, guid: e8b0d21936e75404ca130947608df4d9, type: 3}
+  - appName: Google
+    packageName: com.google.android.googlequicksearchbox
+    appIcon: {fileID: 21300000, guid: 13b6bcc1692e5a54aa1f913080abc256, type: 3}
+  - appName: GTA 5
+    packageName: com.rockstargames.gtav
+    appIcon: {fileID: 21300000, guid: 5ca99811d8d71ac48b9c3699c82561e9, type: 3}
+  - appName: iMovie
+    packageName: com.apple.imovie
+    appIcon: {fileID: 21300000, guid: 2c037c39fa87dc440acc74268ddd7bdc, type: 3}
+  - appName: Instagram
+    packageName: com.instagram.android
+    appIcon: {fileID: 21300000, guid: f4291279c506e1847abd0e5cd5a5aeb2, type: 3}
+  - appName: LinkedIn
+    packageName: com.linkedin.android
+    appIcon: {fileID: 21300000, guid: 0920f16c9e9fc6f45818c6a35284eb30, type: 3}
+  - appName: Microsoft Edge
+    packageName: com.microsoft.emmx
+    appIcon: {fileID: 21300000, guid: 0e01f1c68bee586439f68d4af52e5207, type: 3}
+  - appName: Microsoft PowerPoint
+    packageName: com.microsoft.office.powerpoint
+    appIcon: {fileID: 21300000, guid: 8cf8964e574ae6744965ea7e669d4984, type: 3}
+  - appName: Microsoft Teams
+    packageName: com.microsoft.teams
+    appIcon: {fileID: 21300000, guid: 1f34235d228aa2e429707139343b8d0c, type: 3}
+  - appName: Telegram
+    packageName: org.telegram.messenger
+    appIcon: {fileID: 21300000, guid: 3ad9ab6fe79f7a04e91f96d78b4010dc, type: 3}
+  - appName: Unity
+    packageName: com.unity3d.editor
+    appIcon: {fileID: 21300000, guid: 48273381a89e97a4792caf34cfd69741, type: 3}
+  - appName: uTorrent
+    packageName: com.utorrent.client
+    appIcon: {fileID: 21300000, guid: eb3774694752db4459ebb91c6218c920, type: 3}
+  - appName: WhatsApp
+    packageName: com.whatsapp
+    appIcon: {fileID: 21300000, guid: 3db2a20f52e385c45bdd61f98127f478, type: 3}
+  - appName: YouTube
+    packageName: com.google.android.youtube
+    appIcon: {fileID: 21300000, guid: 257361a6e36cb264ea8492ff769247ab, type: 3}
+  - appName: Zedge
+    packageName: net.zedge.android
+    appIcon: {fileID: 21300000, guid: 5a0ac86ed73893442a167f61b316ae1c, type: 3}
   showFPS: 1
   updateInterval: 0.5
   frameRateCounter: {fileID: 980407985}
@@ -988,6 +1084,7 @@ GameObject:
   - component: {fileID: 1701879481}
   - component: {fileID: 1701879483}
   - component: {fileID: 1701879482}
+  - component: {fileID: 1701879484}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -1010,7 +1107,7 @@ RectTransform:
   m_Father: {fileID: 1952702842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1027,16 +1124,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 46cbf67964aa7a54488e591e10118ab4, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1052,6 +1149,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1701879480}
   m_CullTransparentMesh: 1
+--- !u!114 &1701879484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701879480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AspectMode: 4
+  m_AspectRatio: 0.461478
 --- !u!224 &1720900648 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8696505599620573496, guid: 934de301181712345bc45855d93eef45, type: 3}
