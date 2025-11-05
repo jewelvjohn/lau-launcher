@@ -963,7 +963,17 @@ MonoBehaviour:
   homeButtonPrefab: {fileID: 7408360601075029975, guid: 934de301181712345bc45855d93eef45, type: 3}
   sortAlphabetically: 1
   includeSystemApps: 1
-  sampleApps: []
+  includeRedundentPackages: 0
+  sampleApps:
+  - appName: Adobe Acrobat
+    packageName: com.adobe.acrobat
+    appIcon: {fileID: 21300000, guid: 0cd4390d52ada14419e9b10e9c4786cd, type: 3}
+  - appName: AI
+    packageName: com.google.ai
+    appIcon: {fileID: 21300000, guid: 1319ae5cdacd96d45bfbd71ea03089dd, type: 3}
+  - appName: Adobe Creative Cloud
+    packageName: com.adobe.creativecloud
+    appIcon: {fileID: 21300000, guid: 146420ddd1b4ece42ba16cd1be1a1389, type: 3}
   showFPS: 1
   updateInterval: 0.5
   frameRateCounter: {fileID: 980407985}
