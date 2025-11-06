@@ -67,8 +67,8 @@ public class HomeManager : MonoBehaviour
 
     private void Start()
     {
-        QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 90;
+        //QualitySettings.vSyncCount = 0;
+        //Application.targetFrameRate = 90;
 
         Initialize();
     }
