@@ -204,7 +204,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5a05c0b9f7135814cb1d44e97f6b2bd4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d6c2f50b91a3aec44bac5156acbee738, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -280,7 +280,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Google Play
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 89d94da9a3d628c48bfcee4bda4d59c8, type: 2}
   m_sharedMaterial: {fileID: -2849618294814560666, guid: 89d94da9a3d628c48bfcee4bda4d59c8, type: 2}
