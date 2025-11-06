@@ -11,80 +11,85 @@ public class AppInfo
     public Sprite appIcon;
 }
 
-public class HomeManager : MonoBehaviour
+public class AppDrawerManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private GameObject homePanel;
     [SerializeField] private GameObject homeButtonPrefab;
+    [SerializeField] private GameObject appDrawerParent;
     
     [Header("Properties")]
     [SerializeField] private bool sortAlphabetically = true;
     [SerializeField] private bool includeSystemApps = false;
     [SerializeField] private bool includeRedundentPackages = false;
-    
+
+    [Header("Background")]
+    [SerializeField] private Camera targetCamera;
+    [SerializeField] private Image displayImage;
+
     [Header("Sample Data")]
     [SerializeField] private List<AppInfo> sampleApps;
 
-    [Header("Frame Rate Debug")]
-    [SerializeField] private bool showFPS = false;
-    [SerializeField] private float updateInterval = 0.5f;
-    [SerializeField] private TMP_Text frameRateCounter;
+    private RenderTexture temporaryRenderTexture;
+    private Texture2D capturedTexture;
 
-    private float accum = 0f;
-    private int frames = 0;
-    private float timeLeft;
-    private float fps;
-
-    #region Debug
-    private void FrameRateCalculate()
+    private void Awake()
     {
-        if (!showFPS || frameRateCounter == null) return;
-        
-        timeLeft -= Time.deltaTime;
-        accum += Time.timeScale / Time.deltaTime;
-        frames++;
-
-        // Update FPS at specified interval
-        if (timeLeft <= 0f)
-        {
-            fps = accum / frames;
-            timeLeft = updateInterval;
-            accum = 0f;
-            frames = 0;
-
-            // Update UI
-            if (fps >= 60f)
-                frameRateCounter.color = Color.green;
-            else if (fps >= 30f)
-                frameRateCounter.color = Color.yellow;
-            else
-                frameRateCounter.color = Color.red;
-
-            frameRateCounter.text = $"{fps:F0}";
-        }
-    }
-    #endregion
-
-    private void Start()
-    {
-        //QualitySettings.vSyncCount = 0;
-        //Application.targetFrameRate = 90;
-
-        Initialize();
+        appDrawerParent.SetActive(false);
     }
 
-    private void Update()
+    public void StartAppDrawer()
     {
-        FrameRateCalculate();
+        InitializeAppDrawer();
+        CaptureBackground();
     }
 
-    private void Initialize()
+    private void InitializeAppDrawer()
     {
         RefreshButtons();
-        // Additional initialization logic can be added here
 
         List<AppInfo> installedApps = GetInstalledApps(includeSystemApps);
         CreateAppButtons(installedApps);
+
+        appDrawerParent.SetActive(true);
+    }
+
+    public void CaptureBackground()
+    {
+        int width = targetCamera.pixelWidth;
+        int height = targetCamera.pixelHeight;
+
+        // Create temporary RenderTexture (reuse if capturing multiple times)
+        if (temporaryRenderTexture == null || temporaryRenderTexture.width != width || temporaryRenderTexture.height != height)
+        {
+            if (temporaryRenderTexture != null) temporaryRenderTexture.Release();
+            temporaryRenderTexture = new RenderTexture(width, height, 24);
+        }
+
+        // Store original target and render to our RT
+        RenderTexture originalRT = targetCamera.targetTexture;
+        targetCamera.targetTexture = temporaryRenderTexture;
+        targetCamera.Render();
+        targetCamera.targetTexture = originalRT;
+
+        // Read pixels from GPU to CPU
+        RenderTexture.active = temporaryRenderTexture;
+
+        if (capturedTexture == null || capturedTexture.width != width || capturedTexture.height != height)
+        {
+            capturedTexture = new Texture2D(width, height, TextureFormat.RGB24, false);
+        }
+
+        capturedTexture.ReadPixels(new Rect(0, 0, width, height), 0, 0, false);
+        capturedTexture.Apply(false); // false = no mipmaps
+
+        RenderTexture.active = null;
+
+        // Display in UI
+        Sprite sprite = Sprite.Create(capturedTexture,
+            new Rect(0, 0, width, height),
+            new Vector2(0.5f, 0.5f));
+        displayImage.sprite = sprite;
     }
 
     private void RefreshButtons()
@@ -280,7 +285,7 @@ public class HomeManager : MonoBehaviour
         foreach (AppInfo app in apps)
         {
             GameObject buttonObj = Instantiate(homeButtonPrefab, homePanel.transform);
-            HomeButton homeButton = buttonObj.GetComponent<HomeButton>();
+            AppButton homeButton = buttonObj.GetComponent<AppButton>();
 
             // Find TMP component in children
             if (homeButton != null)

@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HomeButton : MonoBehaviour
+public class AppButton : MonoBehaviour
 {
     [SerializeField] private TMP_Text applicationName;
     [SerializeField] private Image applicationIcon;
