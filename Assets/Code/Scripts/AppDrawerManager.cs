@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using System.Collections.Generic;
 
 [System.Serializable]
@@ -33,28 +34,40 @@ public class AppDrawerManager : MonoBehaviour
     private RenderTexture temporaryRenderTexture;
     private Texture2D capturedTexture;
 
+    private List<AppInfo> installedApps;
+
     private void Awake()
+    {
+        HideAppDrawer();
+        LoadAppList();
+    }
+
+    private void LoadAppList()
+    {
+        installedApps = GetInstalledApps(includeSystemApps);
+    }
+
+    public void ShowAppDrawer()
+    {
+        RefreshAppDrawer();
+        CaptureBackground();
+        appDrawerParent.SetActive(true);
+    }
+
+    public void HideAppDrawer()
     {
         appDrawerParent.SetActive(false);
     }
 
-    public void StartAppDrawer()
+    private void RefreshAppDrawer()
     {
-        InitializeAppDrawer();
-        CaptureBackground();
-    }
+        for (int i = 0; i < homePanel.transform.childCount; i++)
+            Destroy(homePanel.transform.GetChild(i).gameObject);
 
-    private void InitializeAppDrawer()
-    {
-        RefreshButtons();
-
-        List<AppInfo> installedApps = GetInstalledApps(includeSystemApps);
         CreateAppButtons(installedApps);
-
-        appDrawerParent.SetActive(true);
     }
 
-    public void CaptureBackground()
+    private void CaptureBackground()
     {
         int width = targetCamera.pixelWidth;
         int height = targetCamera.pixelHeight;
@@ -92,15 +105,7 @@ public class AppDrawerManager : MonoBehaviour
         displayImage.sprite = sprite;
     }
 
-    private void RefreshButtons()
-    {
-        for (int i = 0; i < homePanel.transform.childCount; i++)
-        {
-            Destroy(homePanel.transform.GetChild(i).gameObject);
-        }
-    }
-
-    public List<AppInfo> GetInstalledApps(bool includeSystemApps = false)
+    private List<AppInfo> GetInstalledApps(bool includeSystemApps = false)
     {
         List<AppInfo> appList = new List<AppInfo>();
 #if UNITY_ANDROID && !UNITY_EDITOR

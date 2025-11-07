@@ -236,7 +236,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 350883050}
         m_TargetAssemblyTypeName: SystemManager, Assembly-CSharp
-        m_MethodName: AppDrawerButtonClick
+        m_MethodName: AppDrawerEnter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -535,7 +535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15ec5af909a7e0f4eae43f251fafc688, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnAppDrawerButton:
+  OnAppDrawerEnter:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1417492186}
@@ -564,7 +564,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1641552800}
         m_TargetAssemblyTypeName: AppDrawerManager, Assembly-CSharp
-        m_MethodName: StartAppDrawer
+        m_MethodName: ShowAppDrawer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -582,12 +582,52 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0.25
+          m_FloatArgument: 0.5
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnAppDrawerExit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1744030357}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1417492186}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1641552800}
+        m_TargetAssemblyTypeName: AppDrawerManager, Assembly-CSharp
+        m_MethodName: HideAppDrawer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
   targetFrameRate: 120
   vSyncCount: 0
+  backAction: {fileID: -4598642779290494026, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!1001 &411802086
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -770,7 +810,7 @@ GameObject:
   - component: {fileID: 479131943}
   - component: {fileID: 479131944}
   m_Layer: 0
-  m_Name: App Drawer Animation
+  m_Name: App Drawer Enable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -872,7 +912,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     startColor: {r: 1, g: 1, b: 1, a: 1}
-    endColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    endColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
 --- !u!1 &574911589
 GameObject:
   m_ObjectHideFlags: 0
@@ -1032,7 +1072,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8249513c8e9e6a34f88cf693a3aa5709, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showFPS: 1
+  showFPS: 0
   updateInterval: 0.5
   frameRateCounter: {fileID: 980407985}
 --- !u!1 &823683521
@@ -1168,7 +1208,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e8c3f9ce357705743b5da958ac82a0bc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: df08cfdd0e9481b4195e3fd97ee29075, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1193,7 +1233,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 962094436}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 938fce054c42f40a3969e27a88d9bdd8, type: 3}
   m_Name: 
@@ -1207,7 +1247,7 @@ MonoBehaviour:
   m_SamplingFilter: 3
   m_SamplingIntensity: 1
   m_SamplingWidth: 1
-  m_SamplingScale: 1
+  m_SamplingScale: 4
   m_TransitionFilter: 0
   m_TransitionRate: 0.5
   m_TransitionReverse: 0
@@ -1569,7 +1609,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1216495768
 RectTransform:
   m_ObjectHideFlags: 0
