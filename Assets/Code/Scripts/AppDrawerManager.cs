@@ -16,6 +16,7 @@ public class AppDrawerManager : MonoBehaviour
     [SerializeField] private GameObject homePanel;
     [SerializeField] private GameObject homeButtonPrefab;
     [SerializeField] private GameObject appDrawerParent;
+    [SerializeField] private ScrollRect appDrawerScroll;
     
     [Header("Properties")]
     [SerializeField] private bool sortAlphabetically = true;
@@ -68,6 +69,7 @@ public class AppDrawerManager : MonoBehaviour
         FindAllApps();
         CaptureBackground();
         appDrawerParent.SetActive(true);
+        appDrawerScroll.verticalNormalizedPosition = 1f;
     }
 
     public void HideAppDrawer()
