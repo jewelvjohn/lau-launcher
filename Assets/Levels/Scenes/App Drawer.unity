@@ -2261,7 +2261,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 823683523}
   m_HandleRect: {fileID: 823683522}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3104,6 +3104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   searchInputField: {fileID: 1562356677}
   searchButton: {fileID: 2074041210}
+  AppDrawerManager: {fileID: 1641552800}
 --- !u!1 &1656809011
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,7 +1,5 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
 using System.Collections.Generic;
 
 [System.Serializable]
@@ -35,6 +33,7 @@ public class AppDrawerManager : MonoBehaviour
     private Texture2D capturedTexture;
 
     private List<AppInfo> installedApps;
+    private List<AppInfo> showingApps;
 
     private void Awake()
     {
@@ -47,9 +46,26 @@ public class AppDrawerManager : MonoBehaviour
         installedApps = GetInstalledApps(includeSystemApps);
     }
 
+    public void FindAllApps()
+    {
+        showingApps = new List<AppInfo>(installedApps);
+        RefreshAppDrawer();
+    }
+
+    public void FindSearchedApps(string key)
+    {
+        showingApps = AppSearcher.SearchApps(installedApps, key);
+        if (showingApps.Count <= 0)
+        {
+            Debug.Log("No apps found for search: " + key);
+        }
+
+        RefreshAppDrawer();
+    }
+
     public void ShowAppDrawer()
     {
-        RefreshAppDrawer();
+        FindAllApps();
         CaptureBackground();
         appDrawerParent.SetActive(true);
     }
@@ -64,7 +80,7 @@ public class AppDrawerManager : MonoBehaviour
         for (int i = 0; i < homePanel.transform.childCount; i++)
             Destroy(homePanel.transform.GetChild(i).gameObject);
 
-        CreateAppButtons(installedApps);
+        CreateAppButtons(showingApps);
     }
 
     private void CaptureBackground()
@@ -300,7 +316,7 @@ public class AppDrawerManager : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning($"No HomeButton found in of {buttonObj.name}");
+                Debug.LogWarning($"No HomeButton found in {buttonObj.name}");
             }
 
             // Add onClick listener

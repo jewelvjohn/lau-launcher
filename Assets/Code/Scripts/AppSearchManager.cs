@@ -5,7 +5,9 @@ using TMPro;
 public class AppSearchManager : MonoBehaviour
 {
     [SerializeField] private TMP_InputField searchInputField;
-    [SerializeField] private Button searchButton;
+    [SerializeField] private Button closeButton;
+
+    [SerializeField] private AppDrawerManager AppDrawerManager;
 
     private void Awake()
     {
@@ -18,31 +20,37 @@ public class AppSearchManager : MonoBehaviour
         searchInputField.onEndEdit.AddListener(OnSearchEdit);
         searchInputField.onSelect.AddListener(OnSearchSelect);
         searchInputField.onDeselect.AddListener(OnSearchDeselect);
-        searchButton.onClick.AddListener(OnSearchButton);
+        closeButton.onClick.AddListener(OnSearchClose);
+
+        closeButton.gameObject.SetActive(false);
     }
 
     private void OnSearchChanged(string text)
     {
-        Debug.Log("Search text changed: " + text);   
+        Debug.Log("Search text changed: " + text);
+        AppDrawerManager.FindSearchedApps(text);
     }
 
     private void OnSearchEdit(string text)
     {
         Debug.Log("Search text edited: " + text);
+        AppDrawerManager.FindSearchedApps(text);
     }
 
     private void OnSearchSelect(string text)
     {
         Debug.Log("Selected search item: " + text);
+        closeButton.gameObject.SetActive(true);
     }
 
     private void OnSearchDeselect(string text)
     {
         Debug.Log("Deselected search item: " + text);
+        closeButton.gameObject.SetActive(false);
     }
 
-    private void OnSearchButton()
+    private void OnSearchClose()
     {
-        Debug.Log("Search button clicked with text: " + searchInputField.text);
+        Debug.Log("Search close button clicked with text: " + searchInputField.text);
     }
 }
