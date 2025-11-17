@@ -8,6 +8,15 @@ public enum AppState
     InApp
 }
 
+public enum GestureType
+{
+    None,
+    SwipeUp,
+    SwipeDown,
+    SwipeLeft,
+    SwipeRight
+}
+
 public class SystemManager : MonoBehaviour
 {
     [Header("Events")]
@@ -18,9 +27,15 @@ public class SystemManager : MonoBehaviour
     [SerializeField] private int targetFrameRate;
     [SerializeField] private int vSyncCount;
 
+    [Header("Gesture")]
+    [SerializeField] private RectTransform appDrawerSwipeArea;
+    [SerializeField] private float gestureThresold = 20f;
+
     private AppState appState;
+    private GestureType gestureType;
 
     private bool activeGesture = false;
+    private bool isAppDrawerSwipe = false;
 
     private void Awake()
     {
@@ -33,6 +48,7 @@ public class SystemManager : MonoBehaviour
         Application.targetFrameRate = targetFrameRate;
 
         appState = AppState.Home;
+        gestureType = GestureType.None;
     }
 
     public void AppDrawerEnter()
@@ -65,20 +81,37 @@ public class SystemManager : MonoBehaviour
         }
     }
 
-    public void UserSwipeStart(Vector2 position, float time)
+    public void UserGestureStart(Vector2 position, float time)
     {
         activeGesture = true;
+
+        Vector2 localPoint;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            appDrawerSwipeArea,
+            position,
+            null,
+            out localPoint
+        );
+
+        if (appDrawerSwipeArea.rect.Contains(localPoint))
+            isAppDrawerSwipe = true;
+        else
+            isAppDrawerSwipe = false;
     }
     
-    public void UserSwipeEnd(Vector2 position, float time)
+    public void UserGestureEnd(Vector2 position, float time)
     {
         activeGesture = false;
+        isAppDrawerSwipe = false;
+        gestureType = GestureType.None;
     }
 
-    public void UserSwipe(Vector2 delta)
+    public void UserGesture(Vector2 delta)
     {
         if (activeGesture)
         {
+            ProcessGesture(delta);
+
             switch (appState)
             {
                 case AppState.Home:
@@ -92,13 +125,38 @@ public class SystemManager : MonoBehaviour
         }
     }
 
-    public void HomeGesture(Vector2 delta)
+    private void ProcessGesture(Vector2 delta)
     {
-        Debug.Log("Home swipe: " + delta);
+        if (gestureType != GestureType.None)
+            return;
+
+        if (delta.magnitude < gestureThresold)
+            return;
+
+        if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
+            gestureType = delta.x < 0 ? GestureType.SwipeRight : GestureType.SwipeLeft;
+        else
+            gestureType = delta.y < 0 ? GestureType.SwipeUp : GestureType.SwipeDown;
     }
 
-    public void AppDrawerGesture(Vector2 delta)
+    private void HomeGesture(Vector2 delta)
     {
-        Debug.Log("App Drawer delta: " + delta);
+        switch (gestureType)
+        {
+            case GestureType.SwipeUp:
+                if (isAppDrawerSwipe)
+                    AppDrawerEnter();
+                break;
+        }
+    }
+
+    private void AppDrawerGesture(Vector2 delta)
+    {
+        switch (gestureType)
+        {
+            case GestureType.SwipeDown:
+                AppDrawerExit();
+                break;
+        }
     }
 }
