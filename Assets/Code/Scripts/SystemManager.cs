@@ -1,6 +1,12 @@
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
+
+public enum AppState
+{
+    Home,
+    AppDrawer,
+    InApp
+}
 
 public class SystemManager : MonoBehaviour
 {
@@ -12,45 +18,87 @@ public class SystemManager : MonoBehaviour
     [SerializeField] private int targetFrameRate;
     [SerializeField] private int vSyncCount;
 
-    [Header("Inputs")]
-    [SerializeField] private InputActionReference backAction;
+    private AppState appState;
+
+    private bool activeGesture = false;
 
     private void Awake()
     {
         InitializeApplication();
     }
 
-    private void OnEnable()
-    {
-        backAction.action.performed += OnBack;
-        backAction.action.Enable();
-    }
-
-    private void OnDisable()
-    {
-        backAction.action.performed -= OnBack;
-        backAction.action.Disable();
-    }
-
     private void InitializeApplication()
     {
         QualitySettings.vSyncCount = vSyncCount;
         Application.targetFrameRate = targetFrameRate;
-    }
 
-    private void OnBack(InputAction.CallbackContext ctx)
-    {
-        if (ctx.performed)
-            AppDrawerExit();
+        appState = AppState.Home;
     }
 
     public void AppDrawerEnter()
     {
         OnAppDrawerEnter?.Invoke();
+        appState = AppState.AppDrawer;
     }
 
     public void AppDrawerExit()
     {
         OnAppDrawerExit?.Invoke();
+        appState = AppState.Home;
+    }
+
+    public void SetAppState(AppState state)
+    {
+        appState = state;
+    }
+
+    public void UserBack()
+    {
+        switch (appState)
+        {
+            case AppState.Home:
+                break;
+
+            case AppState.AppDrawer:
+                AppDrawerExit();
+                break;
+        }
+    }
+
+    public void UserSwipeStart(Vector2 position, float time)
+    {
+        activeGesture = true;
+    }
+    
+    public void UserSwipeEnd(Vector2 position, float time)
+    {
+        activeGesture = false;
+    }
+
+    public void UserSwipe(Vector2 delta)
+    {
+        if (activeGesture)
+        {
+            switch (appState)
+            {
+                case AppState.Home:
+                    HomeGesture(delta);
+                    break;
+
+                case AppState.AppDrawer:
+                    AppDrawerGesture(delta);
+                    break;
+            }
+        }
+    }
+
+    public void HomeGesture(Vector2 delta)
+    {
+        Debug.Log("Home swipe: " + delta);
+    }
+
+    public void AppDrawerGesture(Vector2 delta)
+    {
+        Debug.Log("App Drawer delta: " + delta);
     }
 }
