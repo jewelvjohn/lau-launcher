@@ -7,6 +7,10 @@ using UnityEngine.Events;
 public class GestureEvent
 {
     public GestureType type;
+    public bool absolute = false;
+    public bool normalize = false;
+    public float normalizeMax = 100f;
+    public float normalizeMin = 0f;
     public UnityEvent<float> OnMove;
 }
 
@@ -57,6 +61,18 @@ public class GestureHandler : MonoBehaviour
                 if (gestureEvent.type == gestureType)
                 {
                     float value = (gestureEvent.type == GestureType.SwipeLeft || gestureEvent.type == GestureType.SwipeRight) ? delta.x : delta.y;
+
+                    if (gestureEvent.absolute)
+                    {
+                        value = Mathf.Abs(value);
+                    }
+                    
+                    if (gestureEvent.normalize)
+                    {
+                        value += gestureEvent.normalizeMin;
+                        value /= (gestureEvent.normalizeMax + gestureEvent.normalizeMin);
+                    }
+
                     gestureEvent.OnMove?.Invoke(value);
                 }
             }

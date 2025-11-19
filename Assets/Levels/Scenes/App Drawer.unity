@@ -1307,6 +1307,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gestureEvents:
   - type: 2
+    absolute: 1
+    normalize: 1
+    normalizeMax: 600
+    normalizeMin: 0
     OnMove:
       m_PersistentCalls:
         m_Calls:
@@ -3375,6 +3379,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gestureEvents:
   - type: 1
+    absolute: 1
+    normalize: 1
+    normalizeMax: 600
+    normalizeMin: 0
     OnMove:
       m_PersistentCalls:
         m_Calls:
