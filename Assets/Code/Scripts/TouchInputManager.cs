@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class GestureInputManager : MonoBehaviour
+public class TouchInputManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private InputActionReference backAction;

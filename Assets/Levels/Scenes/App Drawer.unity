@@ -586,6 +586,7 @@ GameObject:
   m_Component:
   - component: {fileID: 350883049}
   - component: {fileID: 350883050}
+  - component: {fileID: 350883051}
   m_Layer: 0
   m_Name: System Manager
   m_TagString: Untagged
@@ -712,8 +713,35 @@ MonoBehaviour:
         m_CallState: 2
   targetFrameRate: 120
   vSyncCount: 0
-  appDrawerSwipeArea: {fileID: 1772687606}
-  gestureThresold: 64
+--- !u!114 &350883051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 350883048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498897fa1e6bca144adf449d85909e62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectEventListeners:
+  - objectEvent: {fileID: 11400000, guid: a8c67154317bd054b8632122273aa1b7, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 350883050}
+          m_TargetAssemblyTypeName: SystemManager, Assembly-CSharp
+          m_MethodName: OnBackAction
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &384797944
 GameObject:
   m_ObjectHideFlags: 0
@@ -1233,6 +1261,68 @@ MonoBehaviour:
           m_CallState: 2
     startColor: {r: 1, g: 1, b: 1, a: 1}
     endColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
+--- !u!1 &547323565
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 547323566}
+  - component: {fileID: 547323567}
+  m_Layer: 0
+  m_Name: App Gestures
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &547323566
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547323565}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1430386098}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &547323567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547323565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2696a530f30ddaa48b04d39074dc23f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gestureEvents:
+  - type: 2
+    OnMove:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 350883050}
+          m_TargetAssemblyTypeName: SystemManager, Assembly-CSharp
+          m_MethodName: AppDrawerExit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  gestureArea: {fileID: 0}
 --- !u!1 &558911521
 GameObject:
   m_ObjectHideFlags: 0
@@ -1283,9 +1373,9 @@ MonoBehaviour:
   OnBackGesture:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 350883050}
-        m_TargetAssemblyTypeName: SystemManager, Assembly-CSharp
-        m_MethodName: UserBack
+      - m_Target: {fileID: 11400000, guid: a8c67154317bd054b8632122273aa1b7, type: 2}
+        m_TargetAssemblyTypeName: ObjectEvent, Assembly-CSharp
+        m_MethodName: Raise
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1298,8 +1388,8 @@ MonoBehaviour:
   OnTouchStart:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 350883050}
-        m_TargetAssemblyTypeName: SystemManager, Assembly-CSharp
+      - m_Target: {fileID: 1430386097}
+        m_TargetAssemblyTypeName: GestureManager, Assembly-CSharp
         m_MethodName: UserGestureStart
         m_Mode: 0
         m_Arguments:
@@ -1313,8 +1403,8 @@ MonoBehaviour:
   OnTouchEnd:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 350883050}
-        m_TargetAssemblyTypeName: SystemManager, Assembly-CSharp
+      - m_Target: {fileID: 1430386097}
+        m_TargetAssemblyTypeName: GestureManager, Assembly-CSharp
         m_MethodName: UserGestureEnd
         m_Mode: 0
         m_Arguments:
@@ -1328,8 +1418,8 @@ MonoBehaviour:
   OnTouchMove:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 350883050}
-        m_TargetAssemblyTypeName: SystemManager, Assembly-CSharp
+      - m_Target: {fileID: 1430386097}
+        m_TargetAssemblyTypeName: GestureManager, Assembly-CSharp
         m_MethodName: UserGesture
         m_Mode: 0
         m_Arguments:
@@ -2963,6 +3053,56 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1430386096
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1430386098}
+  - component: {fileID: 1430386097}
+  m_Layer: 0
+  m_Name: Gesture Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1430386097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430386096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70b67fe2b8550e249bd4d2a6267d5fdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gestureThresold: 20
+  listeners:
+  - {fileID: 1634754885}
+  - {fileID: 547323567}
+--- !u!4 &1430386098
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430386096}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1634754884}
+  - {fileID: 547323566}
+  m_Father: {fileID: 2089758825}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1562356675
 GameObject:
   m_ObjectHideFlags: 0
@@ -3189,6 +3329,68 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1568339672}
   m_CullTransparentMesh: 1
+--- !u!1 &1634754883
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1634754884}
+  - component: {fileID: 1634754885}
+  m_Layer: 0
+  m_Name: Home Gestures
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1634754884
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634754883}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1430386098}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1634754885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634754883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2696a530f30ddaa48b04d39074dc23f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gestureEvents:
+  - type: 1
+    OnMove:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 350883050}
+          m_TargetAssemblyTypeName: SystemManager, Assembly-CSharp
+          m_MethodName: AppDrawerEnter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  gestureArea: {fileID: 1772687606}
 --- !u!1 &1638916458
 GameObject:
   m_ObjectHideFlags: 0
@@ -4004,6 +4206,7 @@ Transform:
   - {fileID: 1638916459}
   - {fileID: 350883049}
   - {fileID: 815750735}
+  - {fileID: 1430386098}
   - {fileID: 558911522}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
